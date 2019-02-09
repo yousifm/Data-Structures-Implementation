@@ -1,5 +1,5 @@
 #include "infix_to_postfix_stack.h"
-#include "postfix_calculation.h"
+#include "infix_calculation.h"
 #include <stdio.h>
 
 int main () {
