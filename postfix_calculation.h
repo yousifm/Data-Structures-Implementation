@@ -5,7 +5,8 @@
 #include <string.h>
 #include "stack.h"
 
-enum OPERATION_EXIT_CODE {OP_OK, OP_DIVISION_BY_ZERO, OP_FACTORIAL_NEGATIVE, OP_INVALID};
+enum OPERATION_EXIT_CODE {OP_OK, OP_DIVISION_BY_ZERO,
+                          OP_FACTORIAL_NEGATIVE, OP_INVALID};
 
 int fact(int num) {
     int value = 1;
