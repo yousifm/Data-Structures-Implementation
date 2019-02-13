@@ -48,7 +48,7 @@ void infix_to_postfix (char infix[256], char postfix[256]) {
         else {
             current_operator = substring[0];
             
-            while (!isempty(operator_stack)) {
+            while (!stack_isempty(operator_stack)) {
                 previous_operator = (char) top_element(operator_stack);
 
                 if (precedence_cmp(previous_operator, current_operator)){
@@ -66,11 +66,11 @@ void infix_to_postfix (char infix[256], char postfix[256]) {
         substring = strtok(NULL, space);
     }
 
-    while (!isempty(operator_stack)) {
+    while (!stack_isempty(operator_stack)) {
         current_operator = (char) pop_element(operator_stack);
 
         //current operator is the last element
-        if (isempty(operator_stack)) {
+        if (stack_isempty(operator_stack)) {
             char addition[2] = {current_operator, '\0'};
             strcat(postfix, addition);
         }

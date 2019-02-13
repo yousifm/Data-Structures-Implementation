@@ -27,9 +27,9 @@ enum OPERATION_EXIT_CODE operate(STACK stack, char operator) {
         value = fact(op1);
     }
     else {
-        if (isempty(stack)) return OP_INVALID;
+        if (stack_isempty(stack)) return OP_INVALID;
         op2 = pop_element(stack);
-        if (isempty(stack)) return OP_INVALID;
+        if (stack_isempty(stack)) return OP_INVALID;
         op1 = pop_element(stack);
 
         switch (operator)
@@ -77,7 +77,7 @@ enum OPERATION_EXIT_CODE execute_operations(char line[256], int* result) {
 
     if (op_code == OP_OK) {
         int r = pop_element(stack);
-        if (!isempty(stack)) return OP_INVALID;
+        if (!stack_isempty(stack)) return OP_INVALID;
         else {
             *result = r;
             return OP_OK;

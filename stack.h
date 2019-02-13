@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 Stack Implementation based on Linked-List Structure.
 Assumes the very first node is a dummy node with no value,
@@ -14,71 +16,74 @@ becoming the node pointed at by the dummy.
 dummy  top
 */
 
-#pragma once
-
 #include <stdlib.h>
 #include <stdio.h>
+#include "list.h"
 
-typedef struct node* node_ptr;
+
 typedef struct node* STACK;
 
-struct node {
-    int data;
-    node_ptr next;
-};
 
-
-int isempty(STACK stack) {
+int stack_isempty(STACK stack) {
     return stack->next == NULL;
 }
 
-void add_element(STACK stack, int element) {
-    node_ptr top_node;
-    top_node = malloc(sizeof(struct node));
-    
+
+void push_element(STACK stack, int element) {
+    stack->data++;
+
+    node_ptr top_node = create_node(element);
     top_node->next = stack->next;
-    top_node->data = element;
 
     stack->next = top_node;
 }
 
-int pop_element(STACK stack) {
-    if(stack->next == NULL) {
-        fprintf(stderr, "POP ON EMPTY STACK");
-        exit(-1);
-    }
-
-    int return_val = stack->next->data;
-    node_ptr next_node = stack->next->next;
-    
-    free(stack->next);
-
-    stack->next = next_node;
-
-    return return_val;
-}
 
 int top_element(STACK stack) {
-    if (isempty(stack)){
+    if (stack_isempty(stack)){
         fprintf(stderr, "TOP ON EMPTY STACK");
         exit(-1);
     }
     return stack->next->data;
 }
 
-STACK make_stack() {
-    STACK stack;
 
-    stack = malloc(sizeof(struct node));
-    stack->next = NULL;
+void delete_top(STACK stack) {
+    stack->data--;
+
+    node_ptr next_node = stack->next->next;
+    
+    free(stack->next);
+
+    stack->next = next_node;
+}
+
+
+int pop_element(STACK stack) {
+    if(stack_isempty(stack)) {
+        fprintf(stderr, "POP ON EMPTY STACK");
+        exit(-1);
+    }
+
+    int return_val = top_element(stack);
+
+    delete_top(stack);
+
+    return return_val;
+}
+
+
+STACK make_stack() {
+    STACK stack = create_node(0);
     
     return stack;
 }
 
+
 void make_empty(STACK stack) {
     node_ptr current_node, previous_node;
     
-    if (isempty(stack)) return;
+    if (stack_isempty(stack)) return;
 
     current_node = stack->next;
 
@@ -88,3 +93,18 @@ void make_empty(STACK stack) {
         free(previous_node);
     }
 }
+
+
+int stack_get_size(STACK stack) {
+    return stack->data;
+}
+
+
+STACK copy_stack(STACK stack) {
+    node_ptr current_node;
+    //cheating, haha
+    STACK new_stack = copy_list(stack);
+    
+    return new_stack;
+}
+
